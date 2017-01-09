@@ -1,0 +1,264 @@
+/**
+* For DAKA html
+*/
+
+body{
+  background:url("./../img/dakahome/background.png");
+  background-size: contain;
+  overflow-y: hidden;
+}
+
+/**
+* 视差滚动
+*/
+.box{
+
+}
+
+.border{
+
+}
+
+/**
+* MENU
+*/
+.menu{
+  height: 10%;
+}
+
+.menu-left {
+  width: 50%;
+  float: left;
+  margin-top: 5.5%;
+}
+
+.menu-left img{
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.menu-left label{
+  width: 84px;
+  height: 20px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+  margin-left: 1.5%;
+}
+.menu-right {
+  width: 50%;
+  float: right;
+  margin-top: 5.5%;
+}
+
+.logo{
+  width: 11px;
+  height: 25px;
+  float: right;
+  margin-right: 6.5%;
+}
+
+.logo-letter{
+  width: 36px;
+  height: 18px;
+  float: right;
+  margin-top: 3px;
+}
+/**
+* END: MENU
+*/
+
+.mcontainer{
+  height: 100%;
+}
+
+.main-figure{
+  width: 100px;
+  height: 40%;
+}
+
+.line{
+  text-align: center;
+  margin-top: 10px;
+
+}
+
+.line img{
+  object-fit: contain;
+  width: 250px;
+  height: 1px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-sign label{
+  margin-top: 8%;
+  width: 60px;
+  height: 20px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+}
+
+.main-table{
+  text-align: center;
+}
+
+.main-table table{
+  text-align: center;
+  vertical-align: middle;
+  border-spacing: 7px;
+  border-collapse: separate;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-table td label{
+  width: 35px;
+  height: 35px;
+  border: solid 1px #1d976c;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #1d976c;
+}
+
+.main-table td img{
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.main-button{
+  margin-top: 8%;
+  width: 160px;
+  height: 40px;
+  object-fit: contain;
+  border: solid 1px #93f9b9;
+  background-color: inherit;
+}
+
+
+.main-button font{
+  width: 37px;
+  height: 25px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #93f9b9;
+}
+
+.main-calendar{
+  text-align: center;
+}
+
+.main-calendar-page{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-calendar-page label{
+  width: 112px;
+  height: 25px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+  margin-left: 14px;
+  margin-right: 14px;
+  line-height: 25px;
+}
+
+.main-calendar-page img{
+  width: 20px;
+  height: 20px;
+}
+
+.main-calendar-table {
+  margin-top: 10px;
+  text-align: center;
+  vertical-align: middle;
+  border-spacing: 10px;
+  border-collapse: separate;
+}
+.main-calendar-table table {
+  width: 276px;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: left;
+  margin-right: auto;
+}
+
+.main-calendar-table table td{
+  width: 45px;
+  height: 45px;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  color: #dddddd;
+}
+
+.main-calendar-table table label{
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border: solid 1px #1d976c;
+  border-radius: 50%;
+  text-align: center;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #000000;
+  background-color: #1d976c;
+}
+
+.main-calendar-table table img{
+  width: 35px;
+  height: 35px;
+}
+.main-sharing img{
+  width: 238px;
+  height: 20px;
+  object-fit: contain;
+  margin-top: 5%;
+}
+
+/**
+* Animate
+*/
+.animate{
+  margin-top: 10%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.animate-3{
+  width: 40px;
+  height: 20px;
+  object-fit: contain;
+}

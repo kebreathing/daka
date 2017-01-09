@@ -1,0 +1,23 @@
+/*
+  filename: jiyu-home.css
+  author: chris
+  created: 2016-12-29
+*/
+body{
+  background:url("./../img/dakahome/background.png");
+  background-size: contain;
+}
+
+.daka-top-part{
+  margin-top: 15px;
+  padding-right: 15px;
+  text-align: right;
+  height: 50px;
+}
+
+.daka-main-part{
+  margin-top: 70px;
+  text-align: center;
+}
+
+/* background-size确定图片大小，contain只考虑显示全部图片，不考虑石头填满*/
