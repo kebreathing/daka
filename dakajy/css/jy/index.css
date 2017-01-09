@@ -1,3 +1,51 @@
 /**
 * For jy-daka index.html
 */
+.bgkcontainer {
+  background: url('./../../img/dakahome/background.png');
+  background-size: contain;
+  height: 100%;
+}
+
+.part-head {
+  height: 9%;
+}
+
+.part-head-logo img{
+  float: right;
+  margin-top: 4.7%;
+}
+.img-logo {
+  width: 11px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.slogon-logo {
+  width:36px;
+  height: 22px;
+  object-fit: contain;
+  margin-left: 4.6%;
+}
+
+.part-main{
+  text-align: center;
+}
+
+.img-jydk {
+  width: 56%; /*100 - 47.2 = 52.8%*/
+  height: 6.4%;
+  margin-top: 18%; /* 原15.5% - 9% = 6.5%*/
+}
+
+.img-slogon {
+  width: 56%;
+  height: 3.6%;
+  margin-top: 3%;
+}
+
+.img-logo-large {
+  width: 17.4%;
+  height: 20.6%;
+  margin-top: 18%;
+}
