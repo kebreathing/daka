@@ -5,6 +5,7 @@
 var dakaObj = {
   openId : 0,
   content: '',
+  signed: false,
   getDate : function(){
     return new Date();
   },
@@ -50,43 +51,45 @@ clickSingleContent = function(partial){
   }
 };
 
-clickDoubleClick = function(partial){
-  var id = "#" + partial;
-  console.log("["+ partial + "] 双击点击");
-  if(partial.length != 0
-      && dakaObj.content.length != 0
-      &&  partial == dakaObj.content){
-        $(id).children().css("color", "#1d976c");
-        $(id).children().css("border-color", "#1d976c");
-        $(id).children().css("background-color", "inherit");
+/*
+* 训练内容颜色变化
+*/
+setContentChangable = function(bool){
+  if(bool){
+    $(".contents").each(function(){
+      var id = this.id;
+      $("#"+id).bind("click",function(){
+        clickSingleContent(id);
+      })
+    });
+  } else {
+    $(".contents").each(function(){
+      $("#"+this.id).unbind("click");
+    });
   }
 }
 
 initContentClick = function(){
-  $("#tdArm").bind("click",function(){
-    clickSingleContent("tdArm");
-  });
-  $("#tdLeg").bind("click",function(){
-    clickSingleContent("tdLeg");
-  });
-  $("#tdBreast").bind("click",function(){
-    clickSingleContent("tdBreast");
-  });
-  $("#tdBack").bind("click",function(){
-    clickSingleContent("tdBack");
-  });
-  $("#tdShoulder").bind("click",function(){
-    clickSingleContent("tdShoulder");
-  });
-  $("#tdEtc").bind("click",function(){
-    clickSingleContent("tdEtc");
-  });
+
+  // 训练内容点击
+  if(dakaObj.signed == false){
+    setContentChangable(true);
+  }
+
+  // 训练按钮点击
+  $("#btnDaka").bind("click",function(){
+    if(dakaObj.signed == false){
+      dakaObj.signed = !dakaObj.signed;
+      setContentChangable(false);
+      console.log("[BtnDaka] 成功签到");
+    } else {
+
+      console.log("[BtnDaka] 已经签到");
+    }
+  })
 };
 
 
 $(document).ready(function(){
   initContentClick();
-  $("#btnDaka").bind("click",function(){
-    console.log("[#BtnDaka] 点击签到按钮.");
-  });
 })
