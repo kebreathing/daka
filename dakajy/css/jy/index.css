@@ -104,9 +104,14 @@
   height: 95%;
 }
 
+.aline{
+  text-align: center;
+}
+
 .aline img{
   object-fit: contain;
   width: 100%;
+  margin-top: 3%;
 }
 
 .page-sign {
@@ -185,4 +190,96 @@
 .agif img{
   width: 40px;
   height: 15px;
+}
+
+.aimg {
+  margin-top: 5%;
+  text-align: center;
+}
+
+.aimg img{
+  width: 74.6%;
+}
+
+/* Daka 2*/
+
+.part-calendar{
+  margin-top: 7%;
+}
+
+.slides{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.slides img{
+  width: 27px;
+  height: 27px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.slides label{
+  width: 130;
+  height: 25px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+}
+
+.table-title{
+  text-align: center;
+  margin-top: 5%;
+}
+
+.table-title table{
+  text-align: center;
+  width: 100%;
+}
+
+.table-title table td {
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  color: #dddddd;
+}
+
+.table-banner{  margin-top: 5%; height: 40%;}
+  .table-banner table {  width: 100%; }
+    .table-banner table td label {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 30px;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+}
+
+/* 肌遇 轮播*/
+.banner { position: relative; overflow: auto; }
+    .banner li { list-style: none; }
+        .banner ul li { float: left; }
+
+.table-banner-style label {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 30px;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
 }

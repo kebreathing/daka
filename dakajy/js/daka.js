@@ -2,6 +2,15 @@
 * JS for jydaka
 */
 
+var dakaCalendar = {
+  year: 2017,
+  month: 1,
+  banner: 2,
+  getTitle: function(){
+    return this.year + " 年 " + this.month + " 月"
+  }
+}
+
 var dakaObj = {
   openId : 0,
   content: '',
@@ -70,7 +79,6 @@ setContentChangable = function(bool){
 }
 
 initContentClick = function(){
-
   // 训练内容点击
   if(dakaObj.signed == false){
     setContentChangable(true);
@@ -83,13 +91,60 @@ initContentClick = function(){
       setContentChangable(false);
       console.log("[BtnDaka] 成功签到");
     } else {
-
       console.log("[BtnDaka] 已经签到");
     }
   })
 };
 
 
+
 $(document).ready(function(){
   initContentClick();
+
+  $("#clabel").html(dakaCalendar.getTitle());
+  TBCalendar.setCalendars(2016,12,"banner1");
+  TBCalendar.setCalendars(2017,1,"banner2");
+  TBCalendar.setCalendars(2017,2,"banner3");
+  var unslider = $(".banner").unslider({
+    arrows : false,
+    index: 1,
+    nav: false,
+  });
+
+  $('.unslider-arrow').click(function() {
+      var fn = this.className.split(' ')[1];
+      if(fn == "prev"){
+        if(dakaCalendar.month == 1){
+          dakaCalendar.year -= 1;
+          dakaCalendar.month = 12;
+        } else {
+          dakaCalendar.month -= 1;
+        }
+
+        if(dakaCalendar.banner == 1){
+          dakaCalendar.banner = 3;
+        } else {
+          dakaCalendar.banner -= 1;
+        }
+
+        unslider.data('unslider').prev();
+      } else {
+        if(dakaCalendar.month == 12){
+          dakaCalendar.year += 1;
+          dakaCalendar.month = 1;
+        } else {
+          dakaCalendar.month += 1;
+        }
+
+        if(dakaCalendar.banner == 3){
+          dakaCalendar.banner = 1;
+        } else {
+          dakaCalendar.banner += 1;
+        }
+
+        unslider.data('unslider').next();
+      }
+      $("#clabel").html(dakaCalendar.getTitle());
+      TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+  });
 })
