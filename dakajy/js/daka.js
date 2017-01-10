@@ -136,7 +136,8 @@ initFlipClick = function(){
         unslider.data('unslider').next();
       }
 
-      console.log(dakaCalendar.month + "-" + dakaCalendar.banner)
+      // console.log(dakaCalendar.month + "-" + dakaCalendar.banner)
+      $("#clabel").html(dakaCalendar.getTitle());
       TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
   });
 }
