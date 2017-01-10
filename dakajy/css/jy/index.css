@@ -251,25 +251,59 @@
   color: #dddddd;
 }
 
-.table-banner{  margin-top: 5%; height: 40%;}
-  .table-banner table {  width: 100%; }
-    .table-banner table td label {
+
+.banner-label-front{
   width: 35px;
   height: 35px;
+  border: solid 1.5px #1d976c;
+  border-radius: 50%;
   text-align: center;
-  line-height: 30px;
+  line-height: 32px;
   font-family: PingFangSC;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
-  color: #dddddd;
+  color: #000000;
+  background-color: #1d976c;
 }
+
+.banner-label-back{
+  width: 35px;
+  height: 35px;
+  border: solid 1.5px #93f9b9;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-family: PingFangSC;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #000000;
+  background-color: #93f9b9;
+}
+
+.table-banner{  margin-top: 5%; height: 43%;}
+  .table-banner table {  width: 100%; }
+      .table-banner table td{
+          width: 45px;
+          height: 45px;
+          text-align: center;
+          line-height: 30px;
+          font-family: PingFangSC;
+          font-size: 14px;
+          font-weight: 500;
+          font-style: normal;
+          font-stretch: normal;
+          color: #dddddd;
+        }
 
 /* 肌遇 轮播*/
 .banner { position: relative; overflow: auto; }
     .banner li { list-style: none; }
         .banner ul li { float: left; }
+
 
 .table-banner-style label {
   width: 35px;
@@ -282,4 +316,9 @@
   font-style: normal;
   font-stretch: normal;
   color: #dddddd;
+}
+
+.banner-img {
+  width: 35px;
+  height: 35px;
 }

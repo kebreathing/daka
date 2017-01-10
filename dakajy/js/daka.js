@@ -5,7 +5,9 @@
 var dakaCalendar = {
   year: 2017,
   month: 1,
-  banner: 2,
+  banner: 1,
+  rightmax: 12,
+  leftmin: 1,
   getTitle: function(){
     return this.year + " 年 " + this.month + " 月"
   }
@@ -35,7 +37,7 @@ var dakaObj = {
 
 clickSingleContent = function(partial){
   var id = "#" + partial;
-  console.log("["+ partial + "] 点击");
+  // console.log("["+ partial + "] 点击");
   if(dakaObj.content.length == 0){
     $(id).children().css("color", "#000000");
     $(id).children().css("border-color", "#93f9b9");
@@ -78,6 +80,7 @@ setContentChangable = function(bool){
   }
 }
 
+// Init: 化训练内容
 initContentClick = function(){
   // 训练内容点击
   if(dakaObj.signed == false){
@@ -89,62 +92,60 @@ initContentClick = function(){
     if(dakaObj.signed == false){
       dakaObj.signed = !dakaObj.signed;
       setContentChangable(false);
-      console.log("[BtnDaka] 成功签到");
+      // console.log("[BtnDaka] 成功签到");
     } else {
-      console.log("[BtnDaka] 已经签到");
+      // console.log("[BtnDaka] 已经签到");
     }
   })
 };
 
-
-
-$(document).ready(function(){
-  initContentClick();
-
-  $("#clabel").html(dakaCalendar.getTitle());
-  TBCalendar.setCalendars(2016,12,"banner1");
-  TBCalendar.setCalendars(2017,1,"banner2");
-  TBCalendar.setCalendars(2017,2,"banner3");
+// Init: 滑动
+initFlipClick = function(){
   var unslider = $(".banner").unslider({
     arrows : false,
-    index: 1,
+    index: dakaObj.month - 1,
     nav: false,
   });
+
 
   $('.unslider-arrow').click(function() {
       var fn = this.className.split(' ')[1];
       if(fn == "prev"){
-        if(dakaCalendar.month == 1){
-          dakaCalendar.year -= 1;
+        if(dakaCalendar.month == dakaCalendar.leftmin){
           dakaCalendar.month = 12;
+          console.log("[LeftMin] Reached.")
         } else {
           dakaCalendar.month -= 1;
         }
-
-        if(dakaCalendar.banner == 1){
-          dakaCalendar.banner = 3;
-        } else {
+        // 移动模块
+        if(dakaCalendar.banner != dakaCalendar.leftmin){
           dakaCalendar.banner -= 1;
         }
-
         unslider.data('unslider').prev();
       } else {
-        if(dakaCalendar.month == 12){
-          dakaCalendar.year += 1;
+        if(dakaCalendar.month == dakaCalendar.rightmax){
           dakaCalendar.month = 1;
+          console.log("[RighMax] Reached.")
         } else {
           dakaCalendar.month += 1;
         }
-
-        if(dakaCalendar.banner == 3){
-          dakaCalendar.banner = 1;
-        } else {
+        // 移动模块
+        if(dakaCalendar.banner != dakaCalendar.rightmax){
           dakaCalendar.banner += 1;
         }
-
         unslider.data('unslider').next();
       }
-      $("#clabel").html(dakaCalendar.getTitle());
+
+      console.log(dakaCalendar.month + "-" + dakaCalendar.banner)
       TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
   });
+}
+
+$(document).ready(function(){
+  $("#clabel").html(dakaCalendar.getTitle());
+  initContentClick();
+  initFlipClick();
+  // 测试用
+  TBCalendar.setCalendars(2017,1,"banner1");
+  TBCalendar.setPrintedCalendars("1-3-5-12-24","胸-腿-胸-胸-胸","banner1");
 })
