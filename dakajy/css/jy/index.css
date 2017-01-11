@@ -338,8 +338,6 @@
 }
 
 .daka-nums{
-  width: 121px;
-  height: 44px;
   object-fit: contain;
   font-family: EurostileMN;
   font-size: 40px;
@@ -351,7 +349,6 @@
 }
 
 .dakasum-label{
-  width: 56px;
   height: 20px;
   object-fit: contain;
   font-family: PingFangSC;

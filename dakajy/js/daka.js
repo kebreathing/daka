@@ -3,9 +3,9 @@
 */
 
 var defaultStyle = {
-  radius: { inner: 80, normal: 93, outter: 106},
+  radius: { inner: 90, normal: 103, outter: 116},
   alpha: { inner: 0.6, normal: 0.4, outter: 0.2},
-  speed: { inner: 0.001, normal: 0.001, outter: 0.001},
+  speed: { inner: 0.005, normal: 0.005, outter: 0.005},
   lineWidth: 10,
 }
 
@@ -150,13 +150,20 @@ initFlipClick = function(){
   });
 }
 
+// 画布初始化
 initCanvas = function(){
   var height = $(".agraph").height();
   var width = $(".agraph").width();
+
+  // 累计打卡：环形图中间的label计算
+  // 1. 设置div大小和画布一样，为了让控件居中
+  // 2. 计算"累计打卡"距离div顶部的距离
+  // 3. 计算公式为： 中心点height/2  - 最小半径 + 线的宽度 * 3
+  var margin_top = height/2 - defaultStyle.radius.inner + defaultStyle.lineWidth * 3;
+  console.log(margin_top)
   $(".page-labels").css("height",height);
   $(".page-labels").css("width",width);
-
-  $("#labelSum").css("margin-top","100px");
+  $("#labelSum").css("margin-top", margin_top);
   document.getElementById("circle1").width = width;
   document.getElementById("circle1").height = height;
   document.getElementById("circle2").width = width;
@@ -206,6 +213,23 @@ initCanvas = function(){
   canvas1.createCircle();
   canvas2.createCircle();
   canvas3.createCircle();
+  $("#daka-nums").html("1 2 3");
+  var timer = 0;
+  var t = 0;
+  var now = 233;
+  function runDakaNums(time){
+    timer = setInterval(function(){
+      if(t > now){
+        clearInterval(timer);
+      } else {
+        $("#daka-nums").html(t);
+        t += 1;
+      }
+    },0.01)
+  }
+
+  runDakaNums(now);
+  timer = null;
 }
 
 
