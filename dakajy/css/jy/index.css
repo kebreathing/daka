@@ -322,3 +322,8 @@
   width: 35px;
   height: 35px;
 }
+
+.canvas-circle {
+  position:absolute;
+  background:inherit;
+}

@@ -142,10 +142,36 @@ initFlipClick = function(){
   });
 }
 
+initCanvas = function(){
+  var height = $(".agraph").height();
+  var width  = $(".agraph").width();
+
+  $(".canvas-circle").css("height",height);
+  $(".canvas-circle").css("width",width);
+
+
+
+  var mp = { x : 100, y : 100};
+  var canvas1 = new CanvasObj();
+  canvas1.setStrokeStyle("")
+  canvas1.setMidPoint(mp);
+  canvas1.setImgPos(0,0,300,300);
+  canvas1.setCanvasId("circle1");
+  canvas1.setStrokeStyle("#93f9b9")
+  canvas1.setRadius(30);
+  canvas1.setSpeed(0.001);
+  canvas1.setRange(0,0.8);
+  canvas1.setAlpha(1);
+  canvas1.setLineWidth(5);
+  canvas1.createCircle();
+}
+
+
 $(document).ready(function(){
   $("#clabel").html(dakaCalendar.getTitle());
   initContentClick();
   initFlipClick();
+  initCanvas();
   // 测试用
   TBCalendar.setCalendars(2017,1,"banner1");
   TBCalendar.setPrintedCalendars("1-3-5-12-24","胸-腿-胸-胸-胸","banner1");
