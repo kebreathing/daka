@@ -2,6 +2,14 @@
 * JS for jydaka
 */
 
+var defaultStyle = {
+  radius: { inner: 80, normal: 93, outter: 106},
+  alpha: { inner: 0.6, normal: 0.4, outter: 0.2},
+  speed: { inner: 0.001, normal: 0.001, outter: 0.001},
+  lineWidth: 10,
+}
+
+
 var dakaCalendar = {
   year: 2017,
   month: 1,
@@ -144,26 +152,60 @@ initFlipClick = function(){
 
 initCanvas = function(){
   var height = $(".agraph").height();
-  var width  = $(".agraph").width();
+  var width = $(".agraph").width();
+  $(".page-labels").css("height",height);
+  $(".page-labels").css("width",width);
 
-  $(".canvas-circle").css("height",height);
-  $(".canvas-circle").css("width",width);
+  $("#labelSum").css("margin-top","100px");
+  document.getElementById("circle1").width = width;
+  document.getElementById("circle1").height = height;
+  document.getElementById("circle2").width = width;
+  document.getElementById("circle2").height = height;
+  document.getElementById("circle3").width = width;
+  document.getElementById("circle3").height = height;
 
-
-
-  var mp = { x : 100, y : 100};
   var canvas1 = new CanvasObj();
-  canvas1.setStrokeStyle("")
-  canvas1.setMidPoint(mp);
-  canvas1.setImgPos(0,0,300,300);
-  canvas1.setCanvasId("circle1");
-  canvas1.setStrokeStyle("#93f9b9")
-  canvas1.setRadius(30);
-  canvas1.setSpeed(0.001);
-  canvas1.setRange(0,0.8);
-  canvas1.setAlpha(1);
-  canvas1.setLineWidth(5);
+  canvas1.setting({
+    imgSize : {height: height ,width: width},
+    midpoint: {x: width / 2,y: height / 2},
+    strokeStyle: "#93f9b9",
+    canvasId : "circle1",
+    globalAlpha: defaultStyle.alpha.inner,
+    radius : defaultStyle.radius.inner,
+    speed: defaultStyle.speed.inner,
+    start : 0,
+    end : 0.4,
+  })
+
+  var canvas2 = new CanvasObj();
+  canvas2.setting({
+    imgSize : {height: 500 ,width: 500},
+    midpoint: {x: width / 2,y: height / 2},
+    strokeStyle: "#93f9b9",
+    canvasId : "circle2",
+    globalAlpha: defaultStyle.alpha.normal,
+    radius : defaultStyle.radius.normal,
+    speed: defaultStyle.speed.normal,
+    start : 0,
+    end : 0.6,
+  })
+
+  var canvas3 = new CanvasObj();
+  canvas3.setting({
+    imgSize : {height: 500 ,width: 500},
+    midpoint: {x: width / 2,y: height / 2},
+    strokeStyle: "#93f9b9",
+    canvasId : "circle3",
+    globalAlpha: defaultStyle.alpha.outter,
+    radius : defaultStyle.radius.outter,
+    speed: defaultStyle.speed.outter,
+    start : 0,
+    end : 0.8,
+  });
+
   canvas1.createCircle();
+  canvas2.createCircle();
+  canvas3.createCircle();
 }
 
 
@@ -172,6 +214,7 @@ $(document).ready(function(){
   initContentClick();
   initFlipClick();
   initCanvas();
+
   // 测试用
   TBCalendar.setCalendars(2017,1,"banner1");
   TBCalendar.setPrintedCalendars("1-3-5-12-24","胸-腿-胸-胸-胸","banner1");

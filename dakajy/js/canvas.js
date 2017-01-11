@@ -7,6 +7,51 @@ var midpoint = function(){
   this.y = 0;
 }
 
+var CanvasTitle = function(){
+  var pos = {};
+  var font = "";
+  var text = "";
+  var canvasId = "";
+  var fillStyle = "#000000";
+  var font_family = "EurostileMN";
+
+  this.setting = function(json){
+    if(json.font != null) font = json.font;
+    if(json.text != null) text = json.text;
+    if(json.fillStyle != null) fillStyle = json.fillStyle;
+    if(json.pos != null) pos = json.pos;
+    if(json.canvasId != null) canvasId = json.canvasId;
+  };
+
+  this.setCanvasId = function(id){
+    canvasId = id;
+  };
+
+  this.setPos = function(obj){
+    pos = obj;
+  }
+
+  this.setText = function(txt){
+    text = txt;
+  };
+
+  this.createText = function(txt){
+    if(canvasId == null) {
+      console.log("[CreateText] canvasId is null");
+      return;
+    }
+    if(pos == null) return;
+    if(txt != null) text = txt;
+
+    var bg = document.getElementById(canvasId);
+    var ctx = bg.getContext("2d");
+    
+    ctx.font="bold 50px EurostileMN"; //EurostileMN
+    ctx.fillStyle = "#93f9b9";
+    ctx.fillText(text,pos.x,pos.y);
+  };
+};
+
 var CanvasObj = function(){
   // 原始参数
   var circ = Math.PI * 2;
@@ -14,7 +59,7 @@ var CanvasObj = function(){
 
   // 基本参数
   var canvasId = '';
-  var imgPos = {x1: 0,y1: 0,x2: 300, y2: 300};
+  var imgSize = {width : 300, height : 300};
   var midpoint = {};
   var radius = 30;    // 半径
   var start =  0;     // 开始位置
@@ -45,9 +90,23 @@ var CanvasObj = function(){
 
   this.setSpeed = function(s) { speed = s; };
 
-  this.setImgPos = function(x1,y1,x2,y2){ imgPos.x1 = x1; imgPos.y1 = y1; imgPos.x2 = x2; imgPos.y2 = y2; };
+  this.setImgSize = function(imgsize){ imgSize = imgsize; };
 
-  // 对外接口
+  this.setting = function(json){
+    if(json.canvasId != null) canvasId = json.canvasId;
+    if(json.radius != null) radius = json.radius;
+    if(json.start != null) start = json.start;
+    if(json.end != null) end = json.end;
+    if(json.speed != null) speed = json.speed;
+    if(json.lineWidth != null) lineWidth = json.lineWidth;
+    if(json.lineCap != null) lineCap = json.lineCap;
+    if(json.strokeStyle != null) strokeStyle = json.strokeStyle;
+    if(json.globalAlpha != null) globalAlpha = json.globalAlpha;
+    if(json.midpoint != null) midpoint = json.midpoint;
+    if(json.imgSize != null) imgSize = json.imgSize;
+  }
+
+  // 画圆：对外接口
   this.createCircle = function(){
     if(canvasId.length == 0) {
       console.log("[Canvas] Select your container.");
@@ -58,8 +117,6 @@ var CanvasObj = function(){
     var ctx = bg.getContext('2d');
 
     ctx.font="15px Arial";
-    ctx.textAlign="start";
-    ctx.fillText("textAlign=start",150,60);
 
     ctx.beginPath();
     ctx.lineCap = lineCap;
@@ -69,7 +126,7 @@ var CanvasObj = function(){
 
     ctx.fill();
     ctx.lineWidth = lineWidth;
-    var imd = ctx.getImageData(imgPos.x1,imgPos.y1,imgPos.x2,imgPos.y2);
+    var imd = ctx.createImageData(imgSize.height,imgSize.width);
 
     function draw(current){
       ctx.putImageData(imd,0,0);

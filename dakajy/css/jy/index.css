@@ -1,6 +1,11 @@
 /**
 * For jy-daka index.html
 */
+@font-face {
+  font-family: "EurostileMN";
+  src: url("./eurostile_mn_extended.ttf");
+}
+
 .bgkcontainer {
   background: url('./../../img/dakahome/background.png');
   background-size: contain;
@@ -26,7 +31,7 @@
   height: 28px;
   line-height: 28px;
   object-fit: contain;
-  font-family: PingFangSC;
+  font-family: PingFangSC; /*EurostileMN;*/
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -326,4 +331,44 @@
 .canvas-circle {
   position:absolute;
   background:inherit;
+}
+.page-labels{
+  position: absolute;
+  text-align: center;
+}
+
+.daka-nums{
+  width: 121px;
+  height: 44px;
+  object-fit: contain;
+  font-family: EurostileMN;
+  font-size: 40px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #93f9b9;
+  text-shadow: 0 0 4px #93f9b9;
+}
+
+.dakasum-label{
+  width: 56px;
+  height: 20px;
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  color: #dddddd;
+}
+
+.dakasum-label2{
+  object-fit: contain;
+  font-family: PingFangSC;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  color: #9b9b9b;
 }
