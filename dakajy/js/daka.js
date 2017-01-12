@@ -32,7 +32,7 @@ var dakaObj = {
   openId : 0,
   content: '',
   signed: false,
-  sumDate: 189,
+  sumDate: 0,
   getDate : function(){
     return new Date();
   },
@@ -118,19 +118,16 @@ initContentClick = function(){
   // 训练按钮点击
   $("#btnDaka").bind("click",function(){
     if(dakaObj.signed == false){
-      // 还没打卡 -- 打卡之后html+1
       dakaObj.signed = !dakaObj.signed;
       $("#daka-nums").html(dakaObj.addSum());
       setContentChangable(false);
       setCanvasRange();
-
       canvaser.outter.modifyCircle(defaultStyle.range.outter,0.0005)
-      if(defaultStyle.range.outter == 0)
-        canvaser.normal.modifyCircle(defaultStyle.range.normal,0.0005)
-      if(defaultStyle.range.normal == 0)
-        canvaser.inner.modifyCircle(defaultStyle.range.inner,0.0005)
-    } else {
-      // 已经打卡
+      // setTimeout("alert('hellooo')",5000);
+      if(defaultStyle.range.outter == 0 && (dakaObj.sumDate > 10))
+        setTimeout(function(){ canvaser.normal.modifyCircle(defaultStyle.range.normal,0.0005); },1000)
+      if(defaultStyle.range.normal == 0 && (dakaObj.sumDate > 100))
+        setTimeout(function(){ canvaser.inner.modifyCircle(defaultStyle.range.inner,0.0005);  },2000);
     }
   })
 };
@@ -171,8 +168,6 @@ initFlipClick = function(){
       TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
   });
 }
-
-
 
 // 画布初始化
 initCanvas = function(){
@@ -237,7 +232,6 @@ initCanvas = function(){
   canvaser.outter.createCircle();
 
   // 标签递增
-  $("#daka-nums").html("1 2 3");
   var timer = 0;
   var t = 0;
   var now = dakaObj.sumDate;
