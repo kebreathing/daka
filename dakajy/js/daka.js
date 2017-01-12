@@ -2,58 +2,6 @@
 * JS for jydaka
 */
 
-var defaultStyle = {
-  radius: { inner: 90, normal: 103, outter: 116},
-  alpha:  { inner: 0.6, normal: 0.4, outter: 0.2},
-  speed:  { inner: 0.005, normal: 0.005, outter: 0.005},
-  range:  { inner: 0.8, norml: 0.6, outter: 0.4},
-  strokeStyle: "#93f9b9",
-  lineWidth: 10
-}
-
-var canvaser= {
-  outter : {},
-  normal : {},
-  inner : {}
-}
-
-var dakaCalendar = {
-  year: 2017,
-  month: 1,
-  banner: 1,
-  rightmax: 12,
-  leftmin: 1,
-  getTitle: function(){
-    return this.year + " 年 " + this.month + " 月"
-  }
-}
-
-var dakaObj = {
-  openId : 0,
-  content: '',
-  signed: false,
-  sumDate: 0,
-  getDate : function(){
-    return new Date();
-  },
-  getStrDate : function(){
-    var d = this.getDate();
-    return ((d.getYear() + 1900) + "-" + (d.getMonth() + 1) + "-" + d.getDate())
-  },
-  setContent : function(ctt){
-    this.content = ctt;
-  },
-  setOpenId: function(id){
-    this.openId = id;
-  },
-  isContentEmpty: function(){
-    return this.content.length == 0;
-  },
-  addSum: function(){
-    return ++this.sumDate;
-  }
-}
-
 // 设置画布终点
 setCanvasRange = function() {
   var sum = dakaObj.sumDate;
@@ -61,7 +9,6 @@ setCanvasRange = function() {
   var decade = sum % 10 / 10; sum = Math.floor(sum/10);
   var hundreds = sum % 10 / 10; sum = Math.floor(sum/10);
   defaultStyle.range = { inner : hundreds, normal : decade, outter : unit };
-  // console.log(defaultStyle.range);
 }
 
 clickSingleContent = function(partial){
@@ -118,12 +65,16 @@ initContentClick = function(){
   // 训练按钮点击
   $("#btnDaka").bind("click",function(){
     if(dakaObj.signed == false){
+      if(dakaObj.isContentEmpty() == true){
+        console.log("[Content] 还没勾选训练内容");
+        return;
+      }
+
       dakaObj.signed = !dakaObj.signed;
       $("#daka-nums").html(dakaObj.addSum());
       setContentChangable(false);
       setCanvasRange();
       canvaser.outter.modifyCircle(defaultStyle.range.outter,0.0005)
-      // setTimeout("alert('hellooo')",5000);
       if(defaultStyle.range.outter == 0 && (dakaObj.sumDate > 10))
         setTimeout(function(){ canvaser.normal.modifyCircle(defaultStyle.range.normal,0.0005); },1000)
       if(defaultStyle.range.normal == 0 && (dakaObj.sumDate > 100))
@@ -248,7 +199,6 @@ initCanvas = function(){
   runDakaNums(now);
   timer = null;
 };
-
 
 $(document).ready(function(){
   $("#clabel").html(dakaCalendar.getTitle());
