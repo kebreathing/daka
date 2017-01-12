@@ -45,7 +45,7 @@ var CanvasTitle = function(){
 
     var bg = document.getElementById(canvasId);
     var ctx = bg.getContext("2d");
-    
+
     ctx.font="bold 50px EurostileMN"; //EurostileMN
     ctx.fillStyle = "#93f9b9";
     ctx.fillText(text,pos.x,pos.y);
@@ -115,20 +115,13 @@ var CanvasObj = function(){
 
     var bg = document.getElementById(canvasId);
     var ctx = bg.getContext('2d');
-
-    ctx.font="15px Arial";
-
-    ctx.beginPath();
     ctx.lineCap = lineCap;
     ctx.strokeStyle = strokeStyle;
     ctx.globalAlpha = globalAlpha;
-    ctx.closePath();
-
-    ctx.fill();
     ctx.lineWidth = lineWidth;
     var imd = ctx.createImageData(imgSize.height,imgSize.width);
 
-    function draw(current){
+    var draw = function(current){
       ctx.putImageData(imd,0,0);
       ctx.beginPath();
       ctx.arc(midpoint.x,midpoint.y,radius,-(quart),((circ)*current) - quart,false);
@@ -150,6 +143,43 @@ var CanvasObj = function(){
     }
 
     loadCanvas(now);
-    timer = null;
-  }
+  };
+
+  // 点击打卡修改Canvas
+  this.modifyCircle = function(lastEnd,lastSpeed){
+    if(lastEnd == null) return;
+    speed = (lastSpeed != null)? lastSpeed : speed;
+    lastEnd = (lastEnd == 0) ? 1 : lastEnd;
+    var bg = document.getElementById(canvasId);
+    var ctx = bg.getContext('2d');
+
+    ctx.lineCap = lineCap;
+    ctx.strokeStyle = strokeStyle;
+    ctx.globalAlpha = globalAlpha;
+    ctx.lineWidth = lineWidth;
+    var imd = ctx.createImageData(imgSize.height,imgSize.width);
+
+    var draw = function (current){
+      ctx.putImageData(imd,0,0);
+      ctx.beginPath();
+      ctx.arc(midpoint.x,midpoint.y,radius,-(quart),((circ)*current) - quart,false);
+      ctx.stroke();
+    }
+
+    var t = end;
+    var now = lastEnd;
+    var timer = null;
+    function loadCanvas(now){
+      timer = setInterval(function(){
+        if(t >= now){
+          clearInterval(timer);
+          if(lastEnd == 1)  ctx.clearRect(0,0,imgSize.width,imgSize.height);
+        } else {
+          draw(t);
+          t += speed;
+        }
+      },5)
+    }
+    loadCanvas(now);
+  };
 }

@@ -4,11 +4,18 @@
 
 var defaultStyle = {
   radius: { inner: 90, normal: 103, outter: 116},
-  alpha: { inner: 0.6, normal: 0.4, outter: 0.2},
-  speed: { inner: 0.005, normal: 0.005, outter: 0.005},
-  lineWidth: 10,
+  alpha:  { inner: 0.6, normal: 0.4, outter: 0.2},
+  speed:  { inner: 0.005, normal: 0.005, outter: 0.005},
+  range:  { inner: 0.8, norml: 0.6, outter: 0.4},
+  strokeStyle: "#93f9b9",
+  lineWidth: 10
 }
 
+var canvaser= {
+  outter : {},
+  normal : {},
+  inner : {}
+}
 
 var dakaCalendar = {
   year: 2017,
@@ -25,6 +32,7 @@ var dakaObj = {
   openId : 0,
   content: '',
   signed: false,
+  sumDate: 189,
   getDate : function(){
     return new Date();
   },
@@ -40,12 +48,24 @@ var dakaObj = {
   },
   isContentEmpty: function(){
     return this.content.length == 0;
+  },
+  addSum: function(){
+    return ++this.sumDate;
   }
+}
+
+// 设置画布终点
+setCanvasRange = function() {
+  var sum = dakaObj.sumDate;
+  var unit = sum % 10 / 10; sum = Math.floor(sum/10);
+  var decade = sum % 10 / 10; sum = Math.floor(sum/10);
+  var hundreds = sum % 10 / 10; sum = Math.floor(sum/10);
+  defaultStyle.range = { inner : hundreds, normal : decade, outter : unit };
+  // console.log(defaultStyle.range);
 }
 
 clickSingleContent = function(partial){
   var id = "#" + partial;
-  // console.log("["+ partial + "] 点击");
   if(dakaObj.content.length == 0){
     $(id).children().css("color", "#000000");
     $(id).children().css("border-color", "#93f9b9");
@@ -88,7 +108,7 @@ setContentChangable = function(bool){
   }
 }
 
-// Init: 化训练内容
+// Init: 训练计划打卡按钮
 initContentClick = function(){
   // 训练内容点击
   if(dakaObj.signed == false){
@@ -98,11 +118,19 @@ initContentClick = function(){
   // 训练按钮点击
   $("#btnDaka").bind("click",function(){
     if(dakaObj.signed == false){
+      // 还没打卡 -- 打卡之后html+1
       dakaObj.signed = !dakaObj.signed;
+      $("#daka-nums").html(dakaObj.addSum());
       setContentChangable(false);
-      // console.log("[BtnDaka] 成功签到");
+      setCanvasRange();
+
+      canvaser.outter.modifyCircle(defaultStyle.range.outter,0.0005)
+      if(defaultStyle.range.outter == 0)
+        canvaser.normal.modifyCircle(defaultStyle.range.normal,0.0005)
+      if(defaultStyle.range.normal == 0)
+        canvaser.inner.modifyCircle(defaultStyle.range.inner,0.0005)
     } else {
-      // console.log("[BtnDaka] 已经签到");
+      // 已经打卡
     }
   })
 };
@@ -115,17 +143,14 @@ initFlipClick = function(){
     nav: false,
   });
 
-
   $('.unslider-arrow').click(function() {
       var fn = this.className.split(' ')[1];
       if(fn == "prev"){
         if(dakaCalendar.month == dakaCalendar.leftmin){
           dakaCalendar.month = 12;
-          console.log("[LeftMin] Reached.")
         } else {
           dakaCalendar.month -= 1;
         }
-        // 移动模块
         if(dakaCalendar.banner != dakaCalendar.leftmin){
           dakaCalendar.banner -= 1;
         }
@@ -133,25 +158,25 @@ initFlipClick = function(){
       } else {
         if(dakaCalendar.month == dakaCalendar.rightmax){
           dakaCalendar.month = 1;
-          console.log("[RighMax] Reached.")
         } else {
           dakaCalendar.month += 1;
         }
-        // 移动模块
         if(dakaCalendar.banner != dakaCalendar.rightmax){
           dakaCalendar.banner += 1;
         }
         unslider.data('unslider').next();
       }
 
-      // console.log(dakaCalendar.month + "-" + dakaCalendar.banner)
       $("#clabel").html(dakaCalendar.getTitle());
       TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
   });
 }
 
+
+
 // 画布初始化
 initCanvas = function(){
+  setCanvasRange();
   var height = $(".agraph").height();
   var width = $(".agraph").width();
 
@@ -160,7 +185,6 @@ initCanvas = function(){
   // 2. 计算"累计打卡"距离div顶部的距离
   // 3. 计算公式为： 中心点height/2  - 最小半径 + 线的宽度 * 3
   var margin_top = height/2 - defaultStyle.radius.inner + defaultStyle.lineWidth * 3;
-  console.log(margin_top)
   $(".page-labels").css("height",height);
   $(".page-labels").css("width",width);
   $("#labelSum").css("margin-top", margin_top);
@@ -171,52 +195,52 @@ initCanvas = function(){
   document.getElementById("circle3").width = width;
   document.getElementById("circle3").height = height;
 
-  var canvas1 = new CanvasObj();
-  canvas1.setting({
-    imgSize : {height: height ,width: width},
+  canvaser.inner = new CanvasObj();
+  canvaser.normal = new CanvasObj();
+  canvaser.outter = new CanvasObj();
+
+  canvaser.inner.setting({
+    imgSize : {height: height + 50,width: width},
     midpoint: {x: width / 2,y: height / 2},
-    strokeStyle: "#93f9b9",
     canvasId : "circle1",
+    strokeStyle: defaultStyle.strokeStyle,
     globalAlpha: defaultStyle.alpha.inner,
     radius : defaultStyle.radius.inner,
     speed: defaultStyle.speed.inner,
-    start : 0,
-    end : 0.4,
+    end : defaultStyle.range.inner
   })
 
-  var canvas2 = new CanvasObj();
-  canvas2.setting({
-    imgSize : {height: 500 ,width: 500},
+  canvaser.normal.setting({
+    imgSize : {height: height,width: width + 50},
     midpoint: {x: width / 2,y: height / 2},
-    strokeStyle: "#93f9b9",
     canvasId : "circle2",
+    strokeStyle: defaultStyle.strokeStyle,
     globalAlpha: defaultStyle.alpha.normal,
     radius : defaultStyle.radius.normal,
     speed: defaultStyle.speed.normal,
-    start : 0,
-    end : 0.6,
+    end : defaultStyle.range.normal
   })
 
-  var canvas3 = new CanvasObj();
-  canvas3.setting({
-    imgSize : {height: 500 ,width: 500},
+  canvaser.outter.setting({
+    imgSize : {height: height,width: width + 50},
     midpoint: {x: width / 2,y: height / 2},
-    strokeStyle: "#93f9b9",
     canvasId : "circle3",
+    strokeStyle: defaultStyle.strokeStyle,
     globalAlpha: defaultStyle.alpha.outter,
     radius : defaultStyle.radius.outter,
     speed: defaultStyle.speed.outter,
-    start : 0,
-    end : 0.8,
+    end : defaultStyle.range.outter
   });
 
-  canvas1.createCircle();
-  canvas2.createCircle();
-  canvas3.createCircle();
+  canvaser.inner.createCircle();
+  canvaser.normal.createCircle();
+  canvaser.outter.createCircle();
+
+  // 标签递增
   $("#daka-nums").html("1 2 3");
   var timer = 0;
   var t = 0;
-  var now = 233;
+  var now = dakaObj.sumDate;
   function runDakaNums(time){
     timer = setInterval(function(){
       if(t > now){
@@ -227,16 +251,16 @@ initCanvas = function(){
       }
     },0.01)
   }
-
   runDakaNums(now);
   timer = null;
-}
+};
 
 
 $(document).ready(function(){
   $("#clabel").html(dakaCalendar.getTitle());
   initContentClick();
   initFlipClick();
+
   initCanvas();
 
   // 测试用
