@@ -58,10 +58,12 @@ setContentChangable = function(bool){
 // Init: 训练计划打卡按钮
 initContentClick = function(){
   // 训练内容点击
-  if(dakaObj.signed == false){
+  if(dakaObj.signed == true){
+    $("#btnDaka").html("明日再来吧！");
+    return;
+  } else {
     setContentChangable(true);
   }
-
   // 训练按钮点击
   $("#btnDaka").bind("click",function(){
     if(dakaObj.signed == false){
@@ -71,6 +73,7 @@ initContentClick = function(){
       }
 
       dakaObj.signed = !dakaObj.signed;
+      $("#btnDaka").html("打卡成功！");
       $("#daka-nums").html(dakaObj.addSum());
       setContentChangable(false);
       setCanvasRange();
@@ -94,29 +97,23 @@ initFlipClick = function(){
   $('.unslider-arrow').click(function() {
       var fn = this.className.split(' ')[1];
       if(fn == "prev"){
-        if(dakaCalendar.month == dakaCalendar.leftmin){
-          dakaCalendar.month = 12;
-        } else {
-          dakaCalendar.month -= 1;
-        }
-        if(dakaCalendar.banner != dakaCalendar.leftmin){
-          dakaCalendar.banner -= 1;
-        }
-        unslider.data('unslider').prev();
-      } else {
-        if(dakaCalendar.month == dakaCalendar.rightmax){
-          dakaCalendar.month = 1;
-        } else {
-          dakaCalendar.month += 1;
-        }
-        if(dakaCalendar.banner != dakaCalendar.rightmax){
-          dakaCalendar.banner += 1;
-        }
-        unslider.data('unslider').next();
-      }
+        if(dakaCalendar.month > dakaCalendar.leftmin){
 
-      $("#clabel").html(dakaCalendar.getTitle());
-      TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+          dakaCalendar.month -= 1;
+          dakaCalendar.banner -= 1;
+          unslider.data('unslider').prev();
+          $("#clabel").html(dakaCalendar.getTitle());
+          TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+        }
+      } else {
+        if(dakaCalendar.month < dakaCalendar.rightmax){
+          dakaCalendar.month += 1;
+          dakaCalendar.banner += 1;
+          unslider.data('unslider').next();
+          $("#clabel").html(dakaCalendar.getTitle());
+          TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+        }
+      }
   });
 }
 
