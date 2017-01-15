@@ -2,6 +2,15 @@
 * JS for jydaka
 */
 
+initSmoothDiv = function(){
+  if(dakaCalendar.month == 1){
+    $("#imgLeft").attr("src","./../img/daka2/arrow-left%20ed.png");
+  }
+  if(dakaCalendar.month == 12){
+    $("#imgRight").attr("src","./../img/daka2/arrow-right%20ed.png");
+  }
+}
+
 // 设置画布终点
 setCanvasRange = function() {
   var sum = dakaObj.sumDate;
@@ -38,7 +47,7 @@ clickSingleContent = function(partial){
 };
 
 /*
-* 训练内容颜色变化
+* 点击按钮之后，训练内容颜色变化
 */
 setContentChangable = function(bool){
   if(bool){
@@ -49,7 +58,13 @@ setContentChangable = function(bool){
       })
     });
   } else {
+    // 按钮不可按
+    $(".tdgroup table label").css("color","#9b9b9b");
+    $(".tdgroup table label").css("border-color","#9b9b9b");
+    $("#btnDaka").css("border-color","#9b9b9b");
+    $("#btnDaka").css("color","#9b9b9b");
     $(".contents").each(function(){
+      // 颜色变灰
       $("#"+this.id).unbind("click");
     });
   }
@@ -73,9 +88,15 @@ initContentClick = function(){
       }
 
       dakaObj.signed = !dakaObj.signed;
-      $("#btnDaka").html("打卡成功！");
-      $("#daka-nums").html(dakaObj.addSum());
+      // 训练内容：设置不可变
       setContentChangable(false);
+      // 训练内容：变灰
+      $("#" + dakaObj.content).children().css("color","#000000");
+      $("#" + dakaObj.content).children().css("background-color","#9b9b9b");
+      $("#btnDaka").text("今日已打卡");
+      $("#daka-nums").html(dakaObj.addSum());
+
+      // 初始化：画布过程
       setCanvasRange();
       canvaser.outter.modifyCircle(defaultStyle.range.outter,0.0005)
       if(defaultStyle.range.outter == 0 && (dakaObj.sumDate > 10))
@@ -98,12 +119,15 @@ initFlipClick = function(){
       var fn = this.className.split(' ')[1];
       if(fn == "prev"){
         if(dakaCalendar.month > dakaCalendar.leftmin){
-
           dakaCalendar.month -= 1;
           dakaCalendar.banner -= 1;
           unslider.data('unslider').prev();
           $("#clabel").html(dakaCalendar.getTitle());
           TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+          if(dakaCalendar.month == 1)
+            $("#imgLeft").attr("src","./../img/daka2/arrow-left%20ed.png");
+          else
+            $("#imgRight").attr("src","./../img/daka2/arrow-right.png");
         }
       } else {
         if(dakaCalendar.month < dakaCalendar.rightmax){
@@ -112,6 +136,10 @@ initFlipClick = function(){
           unslider.data('unslider').next();
           $("#clabel").html(dakaCalendar.getTitle());
           TBCalendar.setCalendars(dakaCalendar.year,dakaCalendar.month,"banner" + dakaCalendar.banner);
+          if(dakaCalendar.month == 12)
+            $("#imgRight").attr("src","./../img/daka2/arrow-right%20ed.png");
+          else
+            $("#imgLeft").attr("src","./../img/daka2/arrow-left.png");
         }
       }
   });
@@ -199,11 +227,10 @@ initCanvas = function(){
 
 $(document).ready(function(){
   $("#clabel").html(dakaCalendar.getTitle());
-  initContentClick();
-  initFlipClick();
-
-  initCanvas();
-
+  initCanvas();           // 初始：画布
+  initContentClick();     // 设置训练内容点击
+  initSmoothDiv();        // 设置日历滑动
+  initFlipClick();        // 设置日历翻页
   // 测试用
   TBCalendar.setCalendars(2017,1,"banner1");
   TBCalendar.setPrintedCalendars("1-3-5-12-24","胸-腿-胸-胸-胸","banner1");

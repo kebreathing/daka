@@ -24,7 +24,9 @@ var dakaCalendar = {
   year: 2017,
   month: 1,
   banner: 1,
+  rightBool: false,
   rightmax: 12,
+  leftBool: false,
   leftmin: 1,
   getTitle: function(){
     return this.year + " 年 " + this.month + " 月";
