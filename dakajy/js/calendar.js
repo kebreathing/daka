@@ -56,7 +56,7 @@ var TBCalendar = {
   * 注意参数格式 以"-"连接的日期和内容
   */
   setPrintedCalendars: function(strDate,strContent,tableDivId){
-    if(strDate.length == 0) return;
+    if(strDate == null || strDate.length == 0) return;
     var arrDaka = strDate.split("-");
     var arrCont = strContent.split("-");
     for(var i=0;i<arrDaka.length;i++){

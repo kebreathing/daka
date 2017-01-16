@@ -3,7 +3,7 @@
 */
 @font-face {
   font-family: "EurostileMN";
-  src: url("./eurostile_mn_extended.ttf");
+  src: url("./../../font/eurostile_mn_extended.ttf");
 }
 
 .bgkcontainer {

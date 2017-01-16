@@ -20,43 +20,44 @@ var canvaser= {
 }
 
 // Page: 2
-var dakaCalendar = {
-  year: 2017,
-  month: 1,
-  banner: 1,
-  rightBool: false,
-  rightmax: 12,
-  leftBool: false,
-  leftmin: 1,
-  getTitle: function(){
-    return this.year + " 年 " + this.month + " 月";
-  }
+var DakaCalendar = function(){
+  this.year = 2017;
+  this.month= 1;
+  this.banner = 1;
+  var rightBool = false;
+  var rightmax = 12;
+  var leftBool = false;
+  var leftmin = 1;
+
+  this.getRightMax = function() { return rightmax; }
+  this.getLeftMin = function() { return leftmin; }
+  this.getTitle = function() { return this.year + " 年 " + this.month + " 月"; }
 }
 
 // Page: 1
-var dakaObj = {
-  openId : 0,
-  content: '',
-  contented: false, // 是否已经选了训练项目
-  signed: false,    // 是否已经签到
-  sumDate: 0,       // 签到总天数
-  getDate : function(){
-    return new Date();
-  },
-  getStrDate : function(){
-    var d = this.getDate();
-    return ((d.getYear() + 1900) + "-" + (d.getMonth() + 1) + "-" + d.getDate())
-  },
-  setContent : function(ctt){
-    this.content = ctt;
-  },
-  setOpenId: function(id){
-    this.openId = id;
-  },
-  isContentEmpty: function(){
-    return this.content.length == 0;
-  },
-  addSum: function(){
-    return ++this.sumDate;
-  }
+var DakaObj = function(){
+  var userId = 1;
+  var current = new Date();
+  var sumDate = 0;       // 签到总天数
+  var content = "";
+  var signed = false;    // 是否已经签到
+  this.contented = false; // 是否已经选了训练项目
+
+  this.year = function() { return current.getYear() + 1900; }
+  this.month= function() { return current.getMonth() + 1;   }
+  this.date = function() { return current.getDate();        }
+
+  this.getUserId = function() { return userId; }
+  this.setUserId = function(id) { userId = id; }
+
+  this.getContent = function() { return content; }
+  this.setContent = function(ctt){ content = ctt; };
+  this.isContentEmpty = function(){ return content.length == 0; };
+
+  this.getSumDate = function() { return sumDate; }
+  this.setSumDate = function(sum) { sumDate = sum; }
+  this.addSum = function(){ return ++sumDate; }
+
+  this.getSigned = function() { return signed; }
+  this.setSigned = function(obj) { signed = obj; }
 }
