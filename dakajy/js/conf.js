@@ -41,11 +41,13 @@ var DakaObj = function(){
   var sumDate = 0;       // 签到总天数
   var content = "";
   var signed = false;    // 是否已经签到
+  var friends = 0;        // 打卡好友数量
   this.contented = false; // 是否已经选了训练项目
 
   this.year = function() { return current.getYear() + 1900; }
   this.month= function() { return current.getMonth() + 1;   }
   this.date = function() { return current.getDate();        }
+  this.strDate = function() { return this.year() + "-" + this.month() + "-" + this.date(); }
 
   this.getUserId = function() { return userId; }
   this.setUserId = function(id) { userId = id; }
@@ -60,4 +62,7 @@ var DakaObj = function(){
 
   this.getSigned = function() { return signed; }
   this.setSigned = function(obj) { signed = obj; }
+
+  this.getFriends = function() { return friends; }
+  this.setFriends = function(f){ friends = f;    }
 }

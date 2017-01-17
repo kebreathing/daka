@@ -57,8 +57,8 @@ var TBCalendar = {
   */
   setPrintedCalendars: function(strDate,strContent,tableDivId){
     if(strDate == null || strDate.length == 0) return;
-    var arrDaka = strDate.split("-");
-    var arrCont = strContent.split("-");
+    var arrDaka = strDate.split("_");
+    var arrCont = strContent.split("_");
     for(var i=0;i<arrDaka.length;i++){
       var id = "#" + tableDivId + "-" + arrDaka[i];
       $(id).empty();

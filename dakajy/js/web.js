@@ -7,17 +7,18 @@ var webObj = {
   part: "daka"
 }
 var url = "http://" + webObj.host + ":" + webObj.port + "/" + webObj.part;
+
 var weblink = {
   postUserSession: url +"/user/log",
   postUserSave : url + "/user/save",
   getUserSigned: url + "/sum/getSigned",
   postDetailedSave: url + "/detailed/save",
+  getDetailedFriends: url + "/detailed/friends",
   getDetailed:   url + "/detailed/get",
   postSumIncre:  url + "/sum/incre",
   postCalBetter: url + "/calendar/better",
-  getCalendar:   url + "/calendar/get",
+  getCalendar:   url + "/calendar/get"
 }
-
 
 /*
 * Rest 函数命名：method+Class+method
@@ -33,8 +34,6 @@ var webconnect = {
       error: function(XMLHttpRequest, textStatus, errorThrown){
       },
       success: function(msg){
-      },
-      complate: function(XMLHttpRequest, textStatus){
       }
     })
   },
@@ -48,8 +47,6 @@ var webconnect = {
       error: function(XMLHttpRequest, textStatus, errorThrown){
       },
       success: function(msg){
-      },
-      complate: function(XMLHttpRequest, textStatus){
       }
     })
   },
@@ -63,14 +60,11 @@ var webconnect = {
       error: function(XMLHttpRequest,textStatus,errorThrown){
       },
       success: function(msg){
-      },
-      complate: function(XMLHttpRequest,textStatus){
       }
     })
   },
   // 修改日历
   postCalBetter: function(obj){
-    console.log(obj)
     $.ajax({
       url : weblink.postCalBetter,
       type: "POST",
@@ -79,8 +73,8 @@ var webconnect = {
       error: function(XMLHttpRequest,textStatus,errorThrown){
       },
       success: function(msg){
-      },
-      complate: function(XMLHttpRequest,textStatus){
+        if(msg.length != 0)
+          TBCalendar.setPrintedCalendars(msg.calendar,msg.trainCalendar,"banner" + msg.month);
       }
     })
   },
@@ -95,15 +89,11 @@ var webconnect = {
       error: function(XMLHttpRequest, textStatus, errorThrown){
       },
       success: function(msg){
-
-      },
-      complate: function(XMLHttpRequest, textStatus){
       }
     })
   },
   // 获取page-1 总次数
   getUserSigned: function(userId){
-    console.log("[Sum-signedCount] id:" + userId)
     $.ajax({
       url : weblink.getUserSigned + "?userId=" + userId,
       type: "GET",
@@ -112,10 +102,7 @@ var webconnect = {
       error: function(XMLHttpRequest,textStatus,errorThrown){
       },
       success: function(result){
-        console.log("[GetUserSigned]: result is got.");
         dakaObj.setSumDate(result);
-      },
-      complate: function(XMLHttpRequest,textStatus){
       }
     })
   },
@@ -131,14 +118,10 @@ var webconnect = {
       error: function(XMLHttpRequest, textStatus, errorThrown){
       },
       success: function(msg){
-        console.log("[GetDetailed]: result is got.");
-        console.log(msg)
         if(msg.length != 0){
           dakaObj.setContent(msg.practise);
           dakaObj.setSigned(true);
         }
-      },
-      complate: function(XMLHttpRequest, textStatus){
       }
     })
   },
@@ -153,19 +136,16 @@ var webconnect = {
       error: function(XMLHttpRequest, textStatus, errorThrown){
       },
       success: function(msg){
-        console.log("[GetCalendar]: result is got.");
         if(msg.length != 0)
           TBCalendar.setPrintedCalendars(msg.calendar,msg.trainCalendar,"banner" + msg.month);
-      },
-      complate: function(XMLHttpRequest, textStatus){
       }
     })
   },
   // 点击打卡按钮，完成所有信息
   webClickBtnDaka(obj){
-    // console.log(obj)
+    var strNowDate = obj.year+"-"+obj.month+"-"+obj.date;
     this.postDetailedSave(obj);
-    this.postSumIncre({userId: obj.userId,nowDate : obj.signTime});
+    this.postSumIncre({userId: obj.userId,nowDate : strNowDate});
     this.postCalBetter({userId: obj.userId,year: obj.year, month: obj.month,date: obj.date, content: obj.practise})
   }
 }
