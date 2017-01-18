@@ -111,6 +111,8 @@ setCanvasRange = function() {
 }
 
 clickSingleContent = function(partialId,content){
+  console.log(content )
+  console.log(dakaObj.getContent())
   var id = "#" + partialId;
   if(dakaObj.isContentEmpty() == true){
     $(id).children().css("color", "#000000");
@@ -125,9 +127,10 @@ clickSingleContent = function(partialId,content){
     dakaObj.setContent("");
   }
   else {
-    $("#" + dakaObj.getContent()).children().css("color","#1d976c");
-    $("#" + dakaObj.getContent()).children().css("border-color", "#1d976c");
-    $("#" + dakaObj.getContent()).children().css("background-color","inherit");
+    console.log(partialId)
+    $("#" + transformContent(dakaObj.getContent())).children().css("color","#1d976c");
+    $("#" + transformContent(dakaObj.getContent())).children().css("border-color", "#1d976c");
+    $("#" + transformContent(dakaObj.getContent())).children().css("background-color","inherit");
 
     $(id).children().css("color", "#000000");
     $(id).children().css("border-color", "#93f9b9");
